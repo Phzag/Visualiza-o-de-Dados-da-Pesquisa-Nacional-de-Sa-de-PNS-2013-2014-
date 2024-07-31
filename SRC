@@ -1,0 +1,83 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as go
+
+# Dados simulados com base nas informações fornecidas
+data = {
+    'Serviço': ['UBS', 'UPA/Emergência Pública', 'Hospital/Ambulatório Público', 'Centro de Especialidades Públicas', 'Consultório/Clínica Particular', 'Emergência Privada'],
+    'Porcentagem': [47.9, 11.3, 10.1, 1.8, 20.6, 4.9]
+}
+
+df_servicos = pd.DataFrame(data)
+
+# Gráfico de pizza
+plt.figure(figsize=(8, 6))
+plt.pie(df_servicos['Porcentagem'], labels=df_servicos['Serviço'], autopct='%1.1f%%', startangle=140)
+plt.title('Distribuição da População que Utiliza Serviços de Saúde Públicos')
+plt.show()
+
+# Gráfico de barras
+plt.figure(figsize=(10, 6))
+sns.barplot(x='Serviço', y='Porcentagem', data=df_servicos, palette='viridis')
+plt.title('Principais Portas de Entrada aos Serviços do SUS')
+plt.xlabel('Serviço')
+plt.ylabel('Porcentagem')
+plt.xticks(rotation=45)
+plt.show()
+
+# Dados para acesso a medicamentos
+data_medicamentos = {
+    'Fonte': ['SUS', 'Programa Farmácia Popular'],
+    'Porcentagem': [33.2, 21.9]
+}
+df_medicamentos = pd.DataFrame(data_medicamentos)
+
+# Gráfico de barras
+plt.figure(figsize=(8, 6))
+sns.barplot(x='Fonte', y='Porcentagem', data=df_medicamentos, palette='magma')
+plt.title('Acesso a Medicamentos')
+plt.xlabel('Fonte')
+plt.ylabel('Porcentagem')
+plt.show()
+
+# Gráfico 3D interativo
+data_3d = {
+    'Escolaridade': ['Sem instrução', 'Fundamental incompleto', 'Médio completo', 'Superior completo'],
+    'Cor': ['Parda', 'Parda', 'Branca', 'Branca'],
+    'Acesso': [41.4, 36.7, 20.5, 10.2]
+}
+df_3d = pd.DataFrame(data_3d)
+
+fig = px.scatter_3d(df_3d, x='Escolaridade', y='Cor', z='Acesso', color='Escolaridade', size='Acesso', title='Perfil dos Usuários da Rede Pública de Saúde')
+fig.show()
+
+# Mapa interativo
+data_regional = {
+    'Região': ['Nordeste', 'Sul', 'Sudeste', 'Centro-Oeste', 'Norte'],
+    'Cobertura': [64.7, 56.2, 50.1, 45.3, 39.8]
+}
+df_regional = pd.DataFrame(data_regional)
+
+fig = px.choropleth(df_regional, 
+                    locations='Região', 
+                    locationmode='geojson-id', 
+                    color='Cobertura',
+                    hover_name='Região', 
+                    title='Distribuição Regional da Cobertura do Programa Saúde da Família')
+fig.show()
+
+# Gráfico de avaliação do atendimento
+data_avaliacao = {
+    'Avaliação': ['Bom', 'Muito Bom', 'Ruim'],
+    'Porcentagem': [60, 22.6, 17.4]
+}
+df_avaliacao = pd.DataFrame(data_avaliacao)
+
+plt.figure(figsize=(8, 6))
+sns.barplot(x='Avaliação', y='Porcentagem', data=df_avaliacao, palette='coolwarm')
+plt.title('Avaliação do Atendimento no SUS')
+plt.xlabel('Avaliação')
+plt.ylabel('Porcentagem')
+plt.show()
